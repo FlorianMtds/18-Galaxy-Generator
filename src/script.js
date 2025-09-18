@@ -6,6 +6,7 @@ import { vertexColor } from 'three/tsl'
 /**
  * Base
  */
+
 // Debug
 const gui = new GUI({width: 300})
 
@@ -18,7 +19,7 @@ const scene = new THREE.Scene()
 /**
  * Galaxy
  */
-const parameters = {}
+const parameters = {} // On créer un constante parameters pour pouvoir modifier des paramètres établis par le suite
 parameters.count = 100000
 parameters.size = 0.01
 parameters.radius = 5
@@ -42,7 +43,7 @@ let material = null
 let points = null
 const generateGalaxy = () => 
 {
-    if(points !== null)
+    if(points !== null) // Si il n'a pas de points alors on retire la géometry, les materials et les points pour gagner en perfs
     {
         geometry.dispose()
         material.dispose()
@@ -51,7 +52,8 @@ const generateGalaxy = () =>
     /**
      * Geometry
      */
-    geometry = new THREE.BufferGeometry()
+
+    geometry = new THREE.BufferGeometry() // créer la geometrie
 
     const positions = new Float32Array(parameters.count * 3)
     const colors = new Float32Array(parameters.count * 3)
@@ -114,6 +116,7 @@ const generateGalaxy = () =>
 
 generateGalaxy()
 
+// Tout les paramètres gui qui concernent la fonction generateGalaxy
 gui.add(parameters, 'count').min(100).max(1000000).step(100).onFinishChange(generateGalaxy)
 gui.add(parameters, 'size').min(0.001).max(0.1).step(0.001).onFinishChange(generateGalaxy)
 gui.add(parameters, 'radius').min(0.01).max(20).step(0.01).onFinishChange(generateGalaxy)
@@ -150,6 +153,7 @@ window.addEventListener('resize', () =>
 /**
  * Camera
  */
+
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.x = 3
@@ -173,6 +177,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Animate
  */
+
 const clock = new THREE.Clock()
 
 const tick = () =>
