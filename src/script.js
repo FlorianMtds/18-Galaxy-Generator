@@ -26,8 +26,16 @@ parameters.branches = 3
 parameters.spin = 1
 parameters.randomness = 0.2
 parameters.randomnessPower = 3
-parameters.insideColor = '#ff6030'
-parameters.outsideColor = '#1b3984'
+
+function randomRgbColor() {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+parameters.insideColor = randomRgbColor();
+parameters.outsideColor = randomRgbColor();
 
 let geometry = null
 let material = null
@@ -170,7 +178,7 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
-
+    
     // Update controls
     controls.update()
 
