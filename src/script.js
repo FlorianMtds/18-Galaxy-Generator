@@ -48,6 +48,10 @@ const generateGalaxy = () =>
     const positions = new Float32Array(parameters.count * 3)
     const colors = new Float32Array(parameters.count * 3)
 
+    const colorInside = new THREE.Color(parameters.insideColor)
+    const colorOutside = new THREE.Color(parameters.outsideColor)
+
+
     for(let i = 0; i < parameters.count; i++){
         const i3 = i * 3
 
@@ -66,9 +70,12 @@ const generateGalaxy = () =>
 
         // Colors
         
-        colors[i3    ] = 1
-        colors[i3 + 1] = 0
-        colors[i3 + 2] = 0
+        const mixedColor = colorInside.clone() // création d'une 3eme couleur en faisant appelle à un clone
+        mixedColor.lerp(colorOutside, radius / parameters.radius) // Appelle de la méthode lerp pour mixé avec la outside color
+
+        colors[i3    ] = mixedColor.r
+        colors[i3 + 1] = mixedColor.g
+        colors[i3 + 2] = mixedColor.b
     }
 
     geometry.setAttribute(
